@@ -20,6 +20,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 
+        <!-- Hotel Datepicker-->
+         <link rel="stylesheet" href="hotel-datepicker.css">
+
+        <script src="fecha.min.js"></script>
+        <script src="hotel-datepicker.min.js"></script>
+
         <!-- Stylesheet Link -->
         <link rel="stylesheet" href="styles.css">
     </head>
@@ -202,286 +208,27 @@
                         </h2>
 
                         <section class="filter-row">
-                            <button class="pill">Stay within 10 miles ▾</button>
-                            <button class="pill">Property type ▾</button>
-                            <button class="pill">2 bedroom ▾</button>
-                            <button class="pill">Most popular ▾</button>
+                            <div class="property-dropdown">
+                                <button
+                                    class="pill property-sort-button"
+                                    id="property-sort-button"
+                                    type="button"
+                                    aria-expanded="false"
+                                >
+                                    <span id="property-sort-label">Most Popular</span>
+                                    <span class="property-sort-arrow">⌄</span>
+                                </button>
+
+                                <div class="property-dropdown-menu" id="property-dropdown-menu">
+                                    <button type="button" data-value="most-popular">Most Popular</button>
+                                    <button type="button" data-value="highest-price">Highest Price</button>
+                                    <button type="button" data-value="lowest-price">Lowest Price</button>
+                                </div>
+                            </div>
                         </section>
 
                         <section class="results-layout">
-                            <div class="card-grid">
-
-                                <article class="property-card">
-                                    <div class="property-card__photo property-card__photo--1">
-                                        <img src="images/resorts/photo-1.png" alt="Fairway Greens Resort">
-                                        <div class="property-card-badge-and-icon">
-                                            <span class="property-card__badge">
-                                                50+ golf <br> courses nearby
-                                            </span>
-
-                                            <span class="property-card__icons">
-                                                <span aria-hidden="true">🌴</span>
-                                                <span aria-hidden="true">📍</span>
-                                                <span aria-hidden="true">♡</span>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="property-card__body">
-                                        <p class="property-card__score">
-                                            <span class="exceptional-stars">★</span> <span class="exceptional-rating">10.0 Exceptional</span> <span class="exceptional-reviews">12 Reviews</span>
-                                        </p>
-
-                                        <h3>Fairway Greens Resort</h3>
-
-                                        <p class="property-card__price">
-                                            <span class="price-source">Booking.com</span>
-                                            <span class="price-amount">From $295 </span>
-                                            <span class="price-info" aria-hidden="true">ⓘ</span>
-                                        </p>
-
-                                        <p class="property-card__amenities">
-                                            Shuttle service to the course · Golf club storage ·
-                                            Pet-friendly · On-site dining options · Sleeps 8
-                                        </p>
-
-                                        <p class="property-card__location">
-                                            Florida &gt; Orlando
-                                        </p>
-
-                                        <div class="property-card__actions">
-                                            <button class="btn btn-ghost">Learn more</button>
-                                            <button class="btn btn-primary">See dates</button>
-                                        </div>
-                                    </div>
-                                </article>
-
-                                <article class="property-card" class="property-card-2">
-                                    <div class="property-card__photo property-card__photo--2">
-                                        <img src="images/resorts/photo-2.png" alt="The Par View Lodge">
-                                        <div class="property-card-badge-and-icon">
-                                            <span class="property-card__badge">
-                                                50+ golf <br> courses nearby
-                                            </span>
-
-                                            <span class="property-card__icons">
-                                                <span aria-hidden="true">🌴</span>
-                                                <span aria-hidden="true">📍</span>
-                                                <span aria-hidden="true">♡</span>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="property-card__body">
-                                        <p class="property-card__score">
-                                            <span class="exceptional-stars">★</span> <span class="exceptional-rating">10.0 Exceptional</span> <span class="exceptional-reviews">12 Reviews</span>
-                                        </p>
-
-                                        <h3>The Par View Lodge</h3>
-
-                                        <p class="property-card__price">
-                                            <span class="price-source">Booking.com</span>
-                                            <span class="price-amount">From $295 </span>
-                                            <span class="price-info" aria-hidden="true">ⓘ</span>
-                                        </p>
-
-                                        <p class="property-card__amenities">
-                                            Shuttle service to the course · Golf club storage ·
-                                            Pet-friendly · On-site dining options · Sleeps 8
-                                        </p>
-
-                                        <p class="property-card__location">
-                                            Florida &gt; Orlando
-                                        </p>
-
-                                        <div class="property-card__actions">
-                                            <button class="btn btn-ghost">Learn more</button>
-                                            <button class="btn btn-primary">See dates</button>
-                                        </div>
-                                    </div>
-                                </article>
-
-                                <article class="property-card" class="property-card-3">
-                                    <div class="property-card__photo property-card__photo--3">
-                                        <img src="images/resorts/photo-3.png" alt="Coastal Links Retreat">
-                                        <div class="property-card-badge-and-icon">
-                                            <span class="property-card__badge">
-                                                50+ golf <br> courses nearby
-                                            </span>
-
-                                            <span class="property-card__icons">
-                                                <span aria-hidden="true">🌴</span>
-                                                <span aria-hidden="true">📍</span>
-                                                <span aria-hidden="true">♡</span>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="property-card__body">
-                                        <p class="property-card__score">
-                                            <span class="exceptional-stars">★</span> <span class="exceptional-rating">10.0 Exceptional</span> <span class="exceptional-reviews">12 Reviews</span>
-                                        </p>
-
-                                        <h3>Coastal Links Retreat</h3>
-
-                                        <p class="property-card__price">
-                                            <span class="price-source">Booking.com</span>
-                                            <span class="price-amount">From $295 </span>
-                                            <span class="price-info" aria-hidden="true">ⓘ</span>
-                                        </p>
-
-                                        <p class="property-card__amenities">
-                                            Shuttle service to the course · Golf club storage ·
-                                            Pet-friendly · On-site dining options · Sleeps 8
-                                        </p>
-
-                                        <p class="property-card__location">
-                                            Florida &gt; Orlando
-                                        </p>
-
-                                        <div class="property-card__actions">
-                                            <button class="btn btn-ghost">Learn more</button>
-                                            <button class="btn btn-primary">See dates</button>
-                                        </div>
-                                    </div>
-                                </article>
-
-                                <article class="property-card" class="property-card-4">
-                                    <div class="property-card__photo property-card__photo--4">
-                                        <img src="images/resorts/photo-4.png" alt="Eagle's Nest Golf Resort">
-                                        <div class="property-card-badge-and-icon">
-                                            <span class="property-card__badge">
-                                                50+ golf <br> courses nearby
-                                            </span>
-
-                                            <span class="property-card__icons">
-                                                <span aria-hidden="true">🌴</span>
-                                                <span aria-hidden="true">📍</span>
-                                                <span aria-hidden="true">♡</span>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="property-card__body">
-                                        <p class="property-card__score">
-                                            <span class="exceptional-stars">★</span> <span class="exceptional-rating">10.0 Exceptional</span> <span class="exceptional-reviews">12 Reviews</span>
-                                        </p>
-
-                                        <h3>Eagle's Nest Golf Resort</h3>
-
-                                        <p class="property-card__price">
-                                            <span class="price-source">Booking.com</span>
-                                            <span class="price-amount">From $295 </span>
-                                            <span class="price-info" aria-hidden="true">ⓘ</span>
-                                        </p>
-
-                                        <p class="property-card__amenities">
-                                            Shuttle service to the course · Golf club storage ·
-                                            Pet-friendly · On-site dining options · Sleeps 8
-                                        </p>
-
-                                        <p class="property-card__location">
-                                            Florida &gt; Orlando
-                                        </p>
-
-                                        <div class="property-card__actions">
-                                            <button class="btn btn-ghost">Learn more</button>
-                                            <button class="btn btn-primary">See dates</button>
-                                        </div>
-                                    </div>
-                                </article>
-
-                                <article class="property-card" class="property-card-5">
-                                    <div class="property-card__photo property-card__photo--5">
-                                        <img src="images/resorts/photo-5.png" alt="Parview Lakeside Hotel">
-                                        <div class="property-card-badge-and-icon">
-                                            <span class="property-card__badge">
-                                                50+ golf <br> courses nearby
-                                            </span>
-
-                                            <span class="property-card__icons">
-                                                <span aria-hidden="true">🌴</span>
-                                                <span aria-hidden="true">📍</span>
-                                                <span aria-hidden="true">♡</span>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="property-card__body">
-                                        <p class="property-card__score">
-                                            <span class="exceptional-stars">★</span> <span class="exceptional-rating">10.0 Exceptional</span> <span class="exceptional-reviews">12 Reviews</span>
-                                        </p>
-
-                                        <h3>Parview Lakeside Hotel</h3>
-
-                                        <p class="property-card__price">
-                                            <span class="price-source">Booking.com</span>
-                                            <span class="price-amount">From $295 </span>
-                                            <span class="price-info" aria-hidden="true">ⓘ</span>
-                                        </p>
-
-                                        <p class="property-card__amenities">
-                                            Shuttle service to the course · Golf club storage ·
-                                            Pet-friendly · On-site dining options · Sleeps 8
-                                        </p>
-
-                                        <p class="property-card__location">
-                                            Florida &gt; Orlando
-                                        </p>
-
-                                        <div class="property-card__actions">
-                                            <button class="btn btn-ghost">Learn more</button>
-                                            <button class="btn btn-primary">See dates</button>
-                                        </div>
-                                    </div>
-                                </article>
-
-                                <article class="property-card" class="property-card-6">
-                                    <div class="property-card__photo property-card__photo--6">
-                                        <img src="images/resorts/photo-6.png" alt="Bunker Bay Retreat">
-                                        <div class="property-card-badge-and-icon">
-                                            <span class="property-card__badge">
-                                                50+ golf <br> courses nearby
-                                            </span>
-
-                                            <span class="property-card__icons">
-                                                <span aria-hidden="true">🌴</span>
-                                                <span aria-hidden="true">📍</span>
-                                                <span aria-hidden="true">♡</span>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="property-card__body">
-                                        <p class="property-card__score">
-                                            <span class="exceptional-stars">★</span> <span class="exceptional-rating">10.0 Exceptional</span> <span class="exceptional-reviews">12 Reviews</span>
-                                        </p>
-
-                                        <h3>Bunker Bay Retreat</h3>
-
-                                        <p class="property-card__price">
-                                            <span class="price-source">Booking.com</span>
-                                            <span class="price-amount">From $295 </span>
-                                            <span class="price-info" aria-hidden="true">ⓘ</span>
-                                        </p>
-
-                                        <p class="property-card__amenities">
-                                            Shuttle service to the course · Golf club storage ·
-                                            Pet-friendly · On-site dining options · Sleeps 8
-                                        </p>
-
-                                        <p class="property-card__location">
-                                            Florida &gt; Orlando
-                                        </p>
-
-                                        <div class="property-card__actions">
-                                            <button class="btn btn-ghost">Learn more</button>
-                                            <button class="btn btn-primary">See dates</button>
-                                        </div>
-                                    </div>
-                                </article>
-
-                            </div>
+                            <div class="card-grid" id="property-list"></div>
 
                             <section class="map-panel" role="img"
                                 aria-label="Map showing nearby stays with nightly prices">
@@ -508,8 +255,6 @@
 
                             <div class="mobile-card-dots" aria-label="Property carousel">
                                 <span class="active"></span>
-                                <span></span>
-                                <span></span>
                                 <span></span>
                                 <span></span>
                             </div>
@@ -883,26 +628,96 @@
                 <!--- Right Column: Sticky Booking Card Aside --->
                 <aside class="aside" aria-label="Booking">
                     <section class="aside-main-content">
-                        <p class="booking-price-avg">USD $600 <span>AVG PER NIGHT</span></p>
+                        <p class="booking-price-avg">USD $2026 <span>AVG PER NIGHT</span></p>
                         
                         <form class="booking-fields" aria-label="Select dates and guests">
+                            <input type="text" id="date-range" hidden>
                             <div class="checkin">
                                 <label for="checkin">CHECK-IN</label>
-                                <select id="checkin" name="checkin">
-                                    <option value="2025-09-20">20 SEP 2025</option>
-                                </select>
+                                <input
+                                    type="text"
+                                    id="checkin"
+                                    name="checkin"
+                                    readonly
+                                    placeholder="SELECT DATE"
+                                >
                             </div>
+
                             <div class="checkout">
                                 <label for="checkout">CHECK-OUT</label>
-                                <select id="checkout" name="checkout">
-                                    <option value="2025-09-21">21 SEP 2025</option>
-                                </select>
+                                <input
+                                    type="text"
+                                    id="checkout"
+                                    name="checkout"
+                                    readonly
+                                    placeholder="SELECT DATE"
+                                >
                             </div>
                             <div class="guests">
                                 <label for="guests">GUESTS</label>
-                                <select id="guests" name="guests">
-                                    <option value="3 guests, 1 infant, 1 pet">3 GUESTS, 1 INFANT, 1 PET</option>
-                                </select>
+                                <input
+                                    type="text"
+                                    id="guests"
+                                    name="guests"
+                                    value="1 GUEST, 0 INFANTS, 0 PETS"
+                                    readonly
+                                >
+                            </div>
+                            <div class="guest-modal" id="guest-modal">
+
+                                <div class="guest-modal-content">
+
+                                    <div class="guest-modal-header">
+                                        <h3>Filters</h3>
+
+                                        <button
+                                            type="button"
+                                            id="guest-modal-close"
+                                            class="guest-modal-close"
+                                            aria-label="Close"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+
+                                    <div class="guest-modal-row">
+                                        <span>Guests</span>
+
+                                        <div class="guest-counter">
+                                            <button type="button" id="guest-minus">−</button>
+
+                                            <span id="guest-count">1</span>
+
+                                            <button type="button" id="guest-plus">+</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="guest-modal-row">
+                                        <span>Infants</span>
+
+                                        <div class="guest-counter">
+                                            <button type="button" id="infant-minus">−</button>
+
+                                            <span id="infant-count">0</span>
+
+                                            <button type="button" id="infant-plus">+</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="guest-modal-row">
+                                        <span>Pets</span>
+
+                                        <div class="guest-counter">
+                                            <button type="button" id="pet-minus">−</button>
+
+                                            <span id="pet-count">0</span>
+
+                                            <button type="button" id="pet-plus">+</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </form>
                         <section class="availability-note">
@@ -910,8 +725,8 @@
                             <p> Dates selected are available</p>
                         </section>
                         <section class="booking-price">
-                            <p class="price-per-night">PRICE PER NIGHT <span>USD $600</span></p>
-                            <p class="total-price">TOTAL PRICE <span>USD $600</span></p>
+                            <p class="price-per-night">PRICE PER NIGHT <span>USD $2026</span></p>
+                            <p class="total-price">TOTAL PRICE <span id="total-price">USD $0</span></p>
                         </section>
                         <button class="btn-availability-check">CHECK AVAILABILITY</button>
                         <p class="redirect-message">You will be redrected to <a href="#"><span class="booking-span">Booking</span><span class="dot-com-span">.com</span></a></p>
@@ -1014,6 +829,8 @@
         </footer>
         <script>
             lucide.createIcons();
+            console.log(typeof HotelDatepicker);
+            console.log(typeof fecha);
 
             /* Golf Highlights mobile scroll indicator */
             const golfHighlightsCards = document.querySelector(".golf-highlights-cards");
@@ -1060,5 +877,8 @@
                 updateGolfHighlightsScrollbar();
             }
         </script>
+        <script src="datepicker.js"></script>
+        <script src="getproperties.js"></script>
+        <script src="favorite.js"></script>
     </body>
 </html>

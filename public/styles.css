@@ -447,6 +447,8 @@ select:focus-visible {
     overflow: hidden;
     border: 2px solid var(--color-border);
     box-shadow: 2px 2px 4px #f3f0f0;
+
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .property-card__photo {
@@ -472,7 +474,7 @@ select:focus-visible {
     padding: 6px 12px 10px 16px;
     border-radius: 999px;
     width: auto;
-    height: 40px;
+    height: 24px;
     line-height: 1.2;
     border: 1px solid var(--color-border);
 }
@@ -900,7 +902,14 @@ select:focus-visible {
     display: block;
 }
 
-.checkin select, .checkout select, .guests select {
+.checkin select,
+.checkout select,
+.guests select,
+.checkin input,
+.checkout input,
+.guests input {
+    width: 100%;
+    min-width: 0;
     border: none;
     outline: none;
     color: var(--color-gray, #5c5959);
@@ -908,6 +917,7 @@ select:focus-visible {
     font-size: var(--font-medium);
     font-weight: var(--font-bold);
     cursor: pointer;
+    padding: 0;
 }
 
 .guests {
@@ -2415,10 +2425,23 @@ select:focus-visible {
         grid-template-rows: auto;
     }
     .card-grid {
+        display: grid;
         grid-template-columns: 1fr;
+        overflow: hidden;
+        width: 100%;
+        gap: 0;
     }
-    .card-grid .property-card:not(:first-child) {
-        display: none;
+
+    .card-grid .property-card {
+        grid-area: 1 / 1;
+        width: 100%;
+        display: block;
+        transform: translateX(0);
+        transition: transform 0.35s ease;
+    }
+
+    .card-grid .property-card.swiping {
+        transition: none;
     }
 
     .pagination-wrapper {
@@ -2892,4 +2915,203 @@ select:focus-visible {
     .footer-copy {
         font-size: 10px;
     }
+}
+
+
+
+/* Guest Filter Modal */
+
+.guest-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(27, 43, 30, 0.25);
+    z-index: 2000;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 16px;
+}
+
+.guest-modal-content {
+    width: min(660px, calc(100% - 32px));
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px 32px 40px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+.guest-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.guest-modal-header h3 {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.guest-modal-close {
+    position: absolute;
+    right: 0;
+    top: -4px;
+    border: none;
+    background: transparent;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #000000;
+}
+
+.guest-modal-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 62px;
+    border-bottom: 2px solid #edf0f1;
+}
+
+.guest-modal-row > span {
+    font-size: 1rem;
+    font-weight: 650;
+    color: #1f2a20;
+}
+
+.guest-counter {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.guest-counter button {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 4px;
+    background-color: #00c99a;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.guest-counter span {
+    min-width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2a20;
+}
+
+
+body.guest-modal-open {
+    overflow: hidden;
+}
+
+.guest-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 200px;
+    background-color: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.guest-modal-content {
+    position: relative;
+    z-index: 2001;
+}
+
+
+.property-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.property-sort-button {
+    min-width: 194px;
+    justify-content: space-between;
+    background-color: #fff;
+}
+
+.property-sort-arrow {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.property-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 100;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.property-dropdown.open .property-dropdown-menu {
+    display: block;
+}
+
+.property-dropdown-menu button {
+    width: 100%;
+    border: none;
+    background: #fff;
+    padding: 10px 16px;
+    text-align: left;
+    font-size: var(--font-small);
+    font-weight: 560;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.property-dropdown-menu button:hover {
+    background-color: var(--color-lighter-green);
+}
+
+@media (max-width: 767px) {
+    .property-dropdown {
+        width: auto;
+    }
+
+    .property-sort-button {
+        min-width: 194px;
+    }
+}
+
+.property-favorite {
+    width: 28px;
+    height: 28px;
+
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+
+    background: transparent;
+    padding: 0;
+
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.property-favorite.active {
+    color: red !important;
 }
