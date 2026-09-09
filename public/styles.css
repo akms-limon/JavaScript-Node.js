@@ -1,0 +1,2895 @@
+/* ==========================================================================
+   Eagle Creek Golf Club — stylesheet
+   Structure: tokens → reset → layout primitives → components (in page
+   order) → 3 responsive tiers (1024 / 768 / 480) at the bottom.
+   No ID selectors, no !important, no floats.
+   ========================================================================== */
+
+/* 1. DESIGN TOKENS — every color/spacing/radius used anywhere below
+   is defined once here. Change a value here, it updates everywhere. */
+
+:root {
+    --color-bg: #ffffff;
+    --color-dark: #1b2b1e;
+    --color-text: #1f2a20;
+    --color-border: #e2dede;
+    --text-secondary: #6b7570;
+    --color-lightgreen: rgb(147, 220, 147);
+    --color-lighter-green: #F3FDF3;
+    --border-gray: rgb(237, 236, 236);
+
+    --sky-blue: rgb(114, 212, 227);
+
+    --white-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    --radius-size: 10px;
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 1rem;
+    --space-4: 1.5rem;
+    --space-5: 2rem;
+    --space-6: 3rem;
+    --space-7: 4rem;
+
+    --max-width: 1200px;
+    --min-width: 768px;
+
+    --font-small: 0.7rem;
+    --font-medium: 0.85rem;
+    --font-large: 0.9375rem;
+    --font-xlarge: 1.35rem;
+
+    --font-bold: 650;
+    --font-body: inter, Plus Jakarta Sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* RESET the styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, h5, p, ul, ol, figure {
+    margin: 0;
+}
+
+ul, ol {
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: 1.5;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline-offset: 2px;
+}
+
+/* Layout Primitives */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding-left: var(--space-4);
+    padding-right: var(--space-3);
+}
+
+.section-heading {
+    font-size: clamp(1.25rem, 2.5vw + 0.5rem, 1.8rem);
+    margin-bottom: var(--space-3);
+}
+
+.btn {
+    border: none;
+    border-radius: 999px;
+    padding: 0 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 40px;
+}
+
+.primary-btn {
+    justify-content: space-between;
+    background-color: var(--color-lightgreen);
+    color: var(--color-dark);
+}
+
+.secondary-btn {
+    justify-content: space-between;
+    background-color: transparent;
+    color: currentColor;
+    border: 1px solid currentColor;
+}
+
+
+/* Navigation Bar */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--color-dark);
+    color: #fff;
+}
+
+/* Navbar */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-1) var(--space-1);
+    gap: var(--space-4);
+}
+
+/* Navigation Items */
+.nav-items {
+    display: flex;
+    font-size: 12px;
+    list-style: none;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    justify-content: flex-end;
+}
+
+/* Nav-right */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    font-weight: 300;
+    font-size: 38px;
+    align-items: center;
+    gap: var(--space-1);
+    color: inherit;
+}
+
+/* Button Styles */
+.nav-actions {
+    display: flex;
+    gap: var(--space-2);
+    flex-shrink: 0;
+}
+
+.btn-search {
+    color: var(--color-lightgreen);
+    border: 2px solid var(--color-lightgreen);
+    min-width: 200px;
+}
+
+.btn-tee-time {
+    font-size: 11px;
+}
+
+.btn-menu,
+.btn-book-tee-time,
+.btn-search-icon {
+    display: none;
+}
+
+.btn-search svg {
+    width: var(--space-3);
+    height: var(--space-3);
+}
+
+
+/* Main */
+
+
+/* Breadcrumbs */
+.breadcrumb {
+    padding: var(--space-3) 0 0 0;
+    font-size: var(--font-small);
+    color: var(--text-secondary);
+}
+
+.breadcrumb_list {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.breadcrumb_list li:not(:last-child)::after {
+    content: ">";
+    margin-left: var(--space-2);
+}
+
+
+/* Main Title */
+.main-title {
+    padding: var(--space-2) 0;
+}
+
+#main-heading {
+    font-size: clamp(1.2rem, 4vw + 0.5rem, 2rem);
+    line-height: 1.2;
+}
+
+/* Meta Row */
+
+.meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.75rem;
+}
+
+.schedule {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.stars {
+    color: rgb(12, 159, 12);
+    font-size: 0.9rem;
+}
+
+.divider {
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+}
+
+.schedule svg {
+    width: var(--space-3);
+    height: var(--space-3);
+}
+
+/* Main Content Section */
+
+
+/* Main Grid */
+.main-content {
+    min-width: 0;
+}
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 370px;
+    gap: var(--space-4);
+    align-items: start;
+}
+
+/* Image Gallery */
+.gallery {
+    display: grid;
+    grid-template-columns: 2fr 0.9fr;
+    gap: 2px;
+    border-radius: var(--radius-size);
+    overflow: hidden;
+}
+
+.gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-main {
+    grid-row: 1 / 3;
+}
+
+.gallery-last .gallery-thumb {
+    width: 100%;
+    height: 100%;
+}
+
+.gallery-last {
+    position: relative;
+}
+
+.gallery-view-btn {
+    position: absolute;
+    bottom: var(--space-2);
+    right: 10px;
+    color: rgb(236, 235, 235);
+    border: 2.5px solid rgb(236, 235, 235);
+    background-color: transparent;
+    border-radius: 999px;
+    padding: 8px 10px;
+    font-size: var(--font-small);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Stay and Play card */
+.stay-play-card {
+    display: none;
+    min-width: 0;
+}
+
+/* Main Description */
+
+.description {
+    font-size: var(--font-medium);
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-4);
+    text-align: justify;
+}
+
+.btn-read-more {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--color-dark);
+    font-size: var(--font-small);
+    padding: 0 0 2px 0;
+    cursor: pointer;
+}
+
+.btn-read-more svg {
+    width: var(--space-3);
+    height: var(--space-3);
+}
+
+
+
+/* Highlights */
+.highlights {
+    display: flex;
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-lighter-green);
+    border-radius: 10px;
+    padding: 12px 20px;
+    border: 2px solid var(--border-gray);
+    font-size: var(--font-large);
+    gap: var(--space-5);
+}
+
+.highlights-heading {
+    font-size: var(--font-large);
+}
+
+.highlights-stats {
+    display: inline-flex;
+    gap: var(--space-5);
+}
+
+.highlights-par,
+.highlights-yards,
+.highlights-course {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--font-medium);
+    font-weight: var(--font-bold);
+    gap: var(--space-3);
+}
+
+.stat-icon {
+    width: var(--space-5);
+    height: var(--space-5);
+    mix-blend-mode: multiply;
+}
+
+.btn-highlights {
+    color: var(--color-dark);
+    background-color: transparent;
+    text-transform: uppercase;
+    border: 2px solid var(--color-dark);
+    font-size: var(--font-small);
+    white-space: nowrap;
+}
+
+
+/* Find Stays (Hotel stay grid, filter and map) */
+#stays-heading {
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-1);
+}
+
+
+.filter-row {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-3);
+}
+.pill {
+    border: 2px solid var(--color-border);
+    background-color: transparent;
+    border-radius: 999px;
+    padding: 10px 10px;
+    font-size: var(--font-small);
+    font-weight: 560;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.results-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 37.5%);
+    gap: var(--space-3);
+    align-items: start;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+}
+
+.property-card {
+    border: var(--card-border);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid var(--color-border);
+    box-shadow: 2px 2px 4px #f3f0f0;
+}
+
+.property-card__photo {
+    aspect-ratio: 5 / 3;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    container-type: inline-size;
+}
+
+.property-card__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.property-card__badge {
+    text-transform: uppercase;
+    background: rgba(5, 9, 4, 0.566);
+    color: rgb(233, 231, 231);
+    font-size: var(--font-small);
+    font-weight: var(--font-bold);
+    padding: 6px 12px 10px 16px;
+    border-radius: 999px;
+    width: auto;
+    height: 40px;
+    line-height: 1.2;
+    border: 1px solid var(--color-border);
+}
+
+.property-card__icons {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.property-card__icons span {
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    border: 2px solid var(--color-border);
+}
+
+.property-card__body {
+    padding: var(--space-3);
+}
+
+.property-card-badge-and-icon {
+
+    position: absolute;
+
+    top: var(--space-2);
+
+    left: var(--space-2);
+
+    right: var(--space-2);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+}
+
+.property-card__score {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #539e03;
+    font-weight: var(--font-bold);
+}
+
+.exceptional-stars {
+    color: white;
+    background-color: #539e03;
+    border-radius: 50%;
+    width: var(--space-3);
+    height: var(--space-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exceptional-rating {
+    position: relative;
+    padding-right: var(--space-2);
+}
+
+.exceptional-rating::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 12px;
+    background-color: rgb(188, 184, 184)
+}
+
+.exceptional-reviews {
+    color: black;
+    white-space: nowrap;
+}
+
+@container (max-width: 190px) {
+    .property-card-badge-and-icon {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.property-card__score-num {
+    background: var(--color-primary-dark);
+    color: #fff;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.property-card h3 {
+    font-size: 1.05rem;
+    margin: var(--space-2) 0 4px;
+}
+
+.property-card__price {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    column-gap: 8px;
+    color: var(--text-secondary);
+    font-weight: var(--font-bold);
+    font-size: var(--font-small);
+    align-items: center;
+}
+
+.price-source {
+    grid-column: 1 / -1;
+}
+
+.price-amount {
+    font-size: 0.9rem;
+    color: #539e03;
+}
+
+.price-info {
+    color: black;
+}
+
+.property-card__amenities,
+.property-card__location {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    font-weight: var(--font-bold);
+}
+
+.property-card__location {
+    font-weight: var(--font-bold);
+    font-size: 0.78rem;
+}
+
+.property-card__actions {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+}
+
+.property-card__actions .btn {
+    flex: 1;
+    justify-content: center;
+}
+
+.btn-ghost {
+    background-color: transparent;
+    border: 2px solid var(--color-border);
+    text-transform: uppercase;
+    font-size: 0.83rem;
+    padding: 1px;
+    color: var(--text-secondary);
+}
+
+.btn-primary {
+    background-color: var(--color-lightgreen);
+    text-transform: uppercase;
+    font-size: 0.83rem;
+    padding: 1px;
+    color: var(--text-secondary);
+}
+
+.map-panel {
+    top: var(--space-4);
+    border: 1px solid var(--sky-blue);
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    height: 100%;
+    width: 100%;
+    background: #dcecd8 center / cover;
+}
+
+.map-panel iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: var(--space-2);
+    margin: var(--space-4) 0;
+    font-size: var(--space-3);
+    font-weight: var(--font-bold);
+    color: var(--text-secondary);
+}
+
+.pagination button {
+    border: var(--card-border);
+    background: #fff;
+    border-radius: var(--radius-sm);
+    width: 40px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.pagination button[aria-current="page"] {
+    background: var(--color-dark);
+    color: #fff;
+    border-color: var(--color-dark);
+}
+
+.view-all-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-all-btn {
+    width: 250px;
+    height: 28px;
+    padding: 0 var(--space-4);
+}
+
+.mobile-card-dots {
+    display: none;
+}
+
+
+/* Golf Highlights */
+.golf-highlights {
+    width: 100%;
+    margin: 20px auto;
+    padding: 50px 60px 0px;
+    background-color: var(--color-lighter-green);
+    border: 2px solid var(--border-gray);
+    border-radius: 8px;
+}
+
+.golf-highlights-wrapper {
+    width: 100%;
+}
+
+.golf-highlights-scrollbar {
+    display: none;
+}
+
+.golf-highlights-title {
+    margin: 0 0 20px;
+    font-size: 1.8rem;
+    line-height: 1.2;
+    font-weight: var(--font-bold);
+}
+
+/* top 4 cards */
+
+.golf-highlights-cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+}
+
+.golf-highlights-card {
+    min-width: 0;
+    padding: 26px 28px;
+    background-color: #fff;
+    border: 2px solid var(--border-gray);
+    border-radius: 6px;
+}
+
+.card-icon {
+    display: block;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 20px;
+    object-fit: contain;
+}
+
+.card-title {
+    margin: 0 0 12px;
+    font-size: var(--font-xlarge);
+    font-weight: var(--font-bold);
+}
+
+.card-small-title {
+    overflow-wrap: break-word;
+}
+
+.card-text,
+.card-muted {
+    margin: 0 0 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.card-text {
+    font-weight: var(--font-bold);
+    color: var(--color-dark);
+}
+
+.card-muted {
+    font-weight: var(--font-medium);
+    color: var(--text-secondary);
+}
+
+.card-section-title {
+    margin-top: 22px;
+}
+
+.card-divider {
+    width: 100%;
+    height: 1px;
+    margin: 16px 0 16px;
+    background-color: var(--border-gray);
+}
+
+/* Bottom 6 Items */
+.golf-highlights-items {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 50px;
+    row-gap: 0;
+    margin-top: 28px;
+}
+
+.golf-highlights-item {
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 10px 0 28px;
+}
+
+.golf-highlights-item:nth-child(n + 4) {
+    padding-top: 28px;
+    border-top: 1px solid #dfe5e0;
+}
+
+.item-icon {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.item-title {
+    margin: 0 0 6px;
+    font-size: 17px;
+    line-height: 1.25;
+    font-weight: 600;
+}
+
+.item-text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.2;
+    color: #6c716d;
+}
+
+/*Aside/Booking Card*/
+.aside {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 100px;
+    gap: 12px;
+}
+.aside-main-content {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--white-shadow);
+    border-radius: var(--radius-size);
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    border: 2px solid var(--color-border);
+}
+
+.booking-price-avg {
+    font-size: 20px;
+    font-weight: var(--font-bold);
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-1);
+}
+
+.booking-price-avg span {
+    font-size: 12px;
+    font-weight: var(--font-medium);
+    color: var(--text-secondary);
+}
+
+.booking-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+}
+
+.checkin, .checkout, .guests {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid rgb(143, 141, 141);
+    border-radius: 4px;
+    height: 50px;
+    padding: var(--space-2);
+}
+
+.checkin label, .checkout label, .guests label {
+    color: var(--color-gray, #888888);
+    font-size: var(--font-small);
+    display: block;
+}
+
+.checkin select, .checkout select, .guests select {
+    border: none;
+    outline: none;
+    color: var(--color-gray, #5c5959);
+    background: transparent;
+    font-size: var(--font-medium);
+    font-weight: var(--font-bold);
+    cursor: pointer;
+}
+
+.guests {
+    grid-column: 1 / -1;
+}
+
+/* Availability Note */
+
+.availability-note {
+    display: flex;
+    gap: var(--space-2);
+    border: 1px solid var(--color-border);
+    padding: var(--space-2);
+    background-color:rgb(232, 240, 248);
+    border-radius: 4px;
+}
+
+.availability-note svg {
+    background-color: rgb(57, 206, 131);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.availability-note p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Booking Price */
+
+.booking-price {
+    border: 2px solid var(--color-border);
+    padding: var(--space-3) var(--space-3) var(--space-2) var(--space-3);
+    border-radius: 4px;
+}
+
+.price-per-night {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-small);
+    color: var(--text-secondary);
+    font-weight: var(--font-bold);
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-large);
+    font-weight: var(--font-bold);
+    margin-top: var(--space-2);
+}
+
+.total-price span {
+    font-size: 1.08rem;
+}
+
+/* Check Availability */
+.btn-availability-check {
+    background-color: var(--sky-blue);
+    border:none;
+    border-radius: 4px;
+    height: 54px;
+    color: var(--color-dark);
+    font-size: 1.08rem;
+    font-weight: var(--font-bold);
+    cursor: pointer;
+}
+
+.redirect-message {
+    font-size: var(--font-small);
+    color: var(--text-secondary);
+    font-weight: var(--font-bold);
+    text-align: center;
+    padding: 6px;
+}
+
+.booking-span {
+    color: rgb(51, 51, 125);
+    font-size: var(--space-3);
+    font-weight: var(--font-bold);
+}
+.dot-com-span {
+    color: rgb(62, 168, 210);
+    font-size: var(--space-3);
+    font-weight: var(--font-bold);
+}
+
+
+.hot-deal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-small);
+    font-weight: var(--font-bold);
+    background-color: rgb(232, 240, 248);
+    gap: var(--space-2);
+    padding: var(--space-2);
+    margin-left: -16px;
+    margin-right: -16px;
+    margin-bottom: -16px;
+
+    border-bottom-left-radius: var(--radius-size);
+    border-bottom-right-radius: var(--radius-size);
+}
+
+.hot-deal .flame {
+    color: #f6943e;
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+.hot-deal p {
+    margin: 0;
+    font-weight: 550;
+}
+
+/*Aside Footer*/
+.aside-footer {
+    font-size: var(--font-small);
+    font-weight: var(--font-bold);
+    text-align: center;
+    padding: var(--space-3) var(--space-6);
+    background-color: rgb(232, 240, 248);
+    border-radius: var(--radius-size);
+    border: 2px solid var(--color-border);
+}
+
+.aside-footer a {
+    color: rgb(100, 158, 181);
+    font-weight: var(--font-bold);
+    text-decoration: underline;
+}
+
+
+/* Special Packages */
+.packages {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    padding: 20px 0 16px;
+    position: relative;
+}
+
+.packages::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: rgb(229, 227, 227);
+}
+
+.packages h2 {
+    flex: 0 0 auto;
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #26372b;
+}
+
+.packages p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.4;
+    color: #202522;
+}
+
+
+
+/* Guest Reviews */
+
+.reviews {
+    width: 100%;
+    margin: 45px 0;
+}
+
+.reviews h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #26372b;
+}
+
+.reviews-list {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.review {
+    min-width: 0;
+    height: auto;
+    min-height: 235px;
+    padding: 30px 28px;
+    border: 2px solid #dfede1;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.review-top {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.review-date {
+    font-size: 14px;
+    font-weight: 600;
+    color: #b8bab9;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.stars {
+    display: flex;
+    min-width: 0;
+    gap: 3px;
+    font-size: 21px;
+    line-height: 1;
+    color: #ffb52e;
+    flex-shrink: 1;
+    white-space: nowrap;
+}
+
+.stars .off {
+    color: #cfd1d0;
+}
+
+.review-text {
+    margin: 22px 0 0;
+    max-width: 390px;
+    font-size: 17px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #505451;
+}
+
+.review-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    font-size: 15px;
+    color: #656966;
+}
+
+.review-user img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #63c8e2;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+
+.reviews-dots {
+    display: none;
+}
+
+
+/* Course Features */
+
+/* Course Features */
+
+.course-features {
+    width: 100%;
+    margin: 30px 0;
+}
+
+.course-features h2 {
+    margin: 0 0 14px;
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #26372b;
+}
+
+.course-features-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.course-feature {
+    min-width: 0;
+    min-height: 360px;
+    padding: 38px;
+    background: #f7fcf8;
+    border: 2px solid #dfede1;
+    border-radius: 6px;
+}
+
+.course-feature h3 {
+    margin: 0 0 14px;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #26372b;
+}
+
+.course-feature ul {
+    margin: 0;
+    padding-left: 24px;
+}
+
+.course-feature li {
+    margin-bottom: 10px;
+    font-size: 17px;
+    line-height: 1.4;
+    color: #626763;
+}
+
+.course-feature li::marker {
+    color: #26372b;
+}
+
+.course-feature-group + .course-feature-group {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #dce8df;
+}
+
+.course-feature h4 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #26372b;
+}
+
+.course-feature ul {
+    list-style: disc;
+    margin: 0;
+    padding-left: 24px;
+}
+
+.course-feature li::marker {
+    color: #26372b;
+}
+
+
+/* Best Time */
+.best-time {
+    width: 100%;
+    margin: 30px 0;
+}
+
+.best-time h2 {
+    margin: 0 0 10px;
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #26372b;
+}
+
+.best-time p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.45;
+    color: #626763;
+}
+
+/* Weather */
+/* Weather Patterns */
+
+.weather {
+    width: 100%;
+    margin: 30px 0;
+    border: 2px solid #c9e0d6;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.weather-top {
+    display: flex;
+    align-items: center;
+    min-height: 164px;
+    padding: 28px 80px;
+    background: linear-gradient(110deg, #3d6570, #38937f);
+    color: #fff;
+}
+
+.weather-date {
+    flex: 0 0 32%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid rgba(255,255,255,.45);
+}
+
+.weather-date strong {
+    font-size: 27px;
+    line-height: 1.2;
+}
+
+.weather-date span {
+    margin-top: 4px;
+    font-size: 18px;
+}
+
+.weather-current {
+    display: none;
+}
+
+.weather-days {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+}
+
+.weather-days div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weather-days b {
+    font-size: 13px;
+}
+
+.weather-days img {
+    width: 42px;
+    height: 42px;
+    margin: 10px 0 5px;
+    filter: brightness(0) invert(1);
+}
+
+.weather-days span {
+    font-size: 12px;
+}
+
+.weather-body {
+    padding: 34px 38px 36px;
+}
+
+.weather-body h2 {
+    margin: 0 0 24px;
+    line-height: 1;
+    font-weight: 600;
+    color: #111;
+}
+
+.weather-seasons {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 38px;
+}
+
+.season {
+    min-width: 0;
+}
+
+.season > img {
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    padding: 8px;
+    border: 4px solid #3b9785;
+    border-radius: 50%;
+}
+
+.season h3 {
+    margin: 0 0 14px;
+    font-size: 20px;
+    line-height: 1.25;
+    color: #111;
+}
+
+.season > p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #707473;
+}
+
+.temperature {
+    margin-top: 42px;
+    padding-top: 22px;
+    border-top: 1px solid #ddd;
+}
+
+.temperature h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: #111;
+}
+
+.temperature p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #707473;
+}
+
+.weather-dots {
+    display: none;
+}
+
+/* Other Golf Courses */
+
+.other-courses {
+    width: 100%;
+    margin: 30px 0;
+}
+
+.other-courses h2 {
+    margin: 0 0 14px;
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #26372b;
+}
+
+.other-courses-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.other-course {
+    min-width: 0;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 9px;
+    box-shadow: 0 7px 18px rgba(0,0,0,.10);
+}
+
+.other-course > img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.other-course-body {
+    padding: 18px 20px;
+}
+
+.other-course h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #111;
+}
+
+.course-distance {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #3b9785;
+}
+
+.course-distance img {
+    width: 18px;
+    height: 18px;
+    max-width: 18px;
+    object-fit: contain;
+}
+
+.course-stats {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.course-stats span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #454945;
+}
+
+.course-stats img {
+    width: 24px;
+    height: 24px;
+    max-width: 24px;
+    object-fit: contain;
+}
+
+.course-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 14px 0;
+}
+
+.course-note img {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    max-width: 24px;
+    object-fit: contain;
+}
+
+.course-note span {
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: #3b9785;
+}
+
+.golf-img,
+.map-img {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(18%) saturate(900%) hue-rotate(125deg) brightness(90%);
+}
+
+.course-buttons {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.course-buttons button {
+    min-width: 0;
+    height: 44px;
+    padding: 0 8px;
+    border: 1px solid #333;
+    border-radius: 24px;
+    background: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    color: #454945;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    flex-wrap: wrap;
+}
+
+.course-buttons button:last-child {
+    border-color: #8bd89a;
+    background: #8bd89a;
+}
+
+.other-courses-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.other-courses-actions > button:first-child {
+    height: 46px;
+    padding: 0 28px;
+    border: 2px solid #aaa;
+    border-radius: 25px;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    color: #999;
+}
+
+.course-arrow {
+    width: 46px;
+    height: 46px;
+    border: 2px solid #aaa;
+    border-radius: 50%;
+    background: #fff;
+    font-size: 32px;
+    line-height: 1;
+    color: #777;
+}
+
+.course-arrow:last-child {
+    border-color: #222;
+    color: #222;
+}
+
+
+
+/* Footer */
+
+.footer {
+    width: 100%;
+    min-height: 730px;
+    margin-top: 40px;
+    padding: 220px 10% 60px;
+    background:
+        linear-gradient(rgba(4, 33, 16, 0.82), rgb(0, 19, 6)),
+        url("images/footer-background.png") center / cover no-repeat;
+    color: #b7c978;
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    max-width: 1510px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 55px;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #b7c978;
+}
+
+.footer-col a {
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-social {
+    display: flex;
+    align-items: center;
+    gap: 38px;
+    margin: 0 0 38px;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-social svg {
+    width: 22px;
+    height: 22px;
+    fill: #b7c978;
+    stroke: #b7c978;
+    stroke-width: 1.5;
+}
+
+.footer-social a:nth-child(3) svg {
+    fill: none;
+}
+
+.footer-selects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    width: 100%;
+    margin-bottom: 62px;
+}
+
+.footer-selects button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 52px;
+    padding: 0 18px;
+    border: 2px solid #b7c978;
+    border-radius: 6px;
+    background: transparent;
+    color: #b7c978;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.footer-selects button span {
+    font-size: 17px;
+}
+
+.footer-logo {
+    display: block;
+    width: 440px;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 40px;
+}
+
+.footer-copy {
+    margin: 0;
+    font-size: 14px;
+    color: #b7c978;
+}
+
+
+
+/* Small Desktop: 1024px - 1279px */
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+
+    /*aside hide*/
+    .aside {
+        display: none;
+    }
+
+    /* Container */
+    .container {
+        padding-left: var(--space-3);
+        padding-right: var(--space-3);
+    }
+
+    /* Navigation */
+    .nav {
+        gap: var(--space-3);
+    }
+
+    .nav-items {
+        gap: var(--space-2);
+    }
+
+    .logo {
+        font-size: 32px;
+    }
+
+    .btn-search {
+        min-width: 160px;
+    }
+
+    /* Main Content */
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Highlights */
+    .highlights {
+        gap: var(--space-3);
+        padding: 10px 16px;
+    }
+
+    .highlights-stats {
+        gap: var(--space-3);
+    }
+
+    .highlights-par,
+    .highlights-yards,
+    .highlights-course {
+        gap: var(--space-2);
+    }
+
+    /* Find Stays */
+    .results-layout {
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: var(--space-3);
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .property-card__body {
+        padding: var(--space-2);
+    }
+
+    .property-card__actions {
+        gap: var(--space-1);
+    }
+
+    .property-card__actions .btn {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Golf Highlights */
+    .golf-highlights {
+        padding: 36px 36px 0;
+    }
+
+    .golf-highlights-cards {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .golf-highlights-items {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 32px;
+    }
+
+    .golf-highlights-item {
+        gap: 16px;
+    }
+
+    /* Booking / Aside */
+    .aside-main-content {
+        padding: var(--space-2);
+    }
+
+    .aside-footer {
+        padding-left: var(--space-3);
+        padding-right: var(--space-3);
+    }
+
+}
+
+
+
+/* Responsive Design */
+
+/* Media Queries for Tablets */
+@media (max-width: 1024px) {
+    .nav-items {
+        display: none;
+    }
+    .btn-menu {
+        display: inline-flex;
+        background-color: transparent;
+        padding: 8px;
+        width: 40px;
+        height: 40px;
+        color: var(--color-lightgreen);
+        justify-content: center;
+    }
+
+    /* Main Grid */
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Image Gallery */
+    .gallery {
+        grid-template-columns: 1fr;
+        position: relative;
+    }
+    .gallery-main {
+        border-radius: var(--radius-size);
+        display: block;
+    }
+    .gallery-thumb, .gallery-last {
+        display: none;
+    }
+    .gallery-dots {
+        position: absolute;
+        display: flex;
+        bottom: 10px;
+        left: 40%;
+        gap: var(--space-2);
+    }
+    .dot {
+        width: clamp(6px, 1vw, 10px);
+        height: clamp(6px, 1vw, 10px);
+        border-radius: 50%;
+        background-color: transparent;
+        border: 1px solid white;
+    }
+    .dot.active {
+        background-color: white;
+    }
+
+    /* Stay and Play card */
+    .stay-play-card {
+        display: flex;
+        border: 2px solid var(--color-border);
+        border-radius: 8px;
+        margin-top: var(--space-3);
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+    }
+    .header-and-icon-stay, .header-and-icon-play {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+    }
+    .card-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border: 2px solid var(--color-border);
+        border-radius: 4px;
+    }
+
+    /* Stay Card */
+    .stay {
+        flex: 1;
+        min-width: 0;
+    }
+    .stay img{
+        width: 37px;
+        height: 37px;
+        background-color: var(--sky-blue);
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 2px 2px 4px #bcb8b8;
+    }
+    .btn-stay-mobile {
+        display: none;
+    }
+    .stay-heading {
+        font-size: 2.5rem;
+        color: var(--sky-blue);
+    }
+    .stay-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-4);
+    }
+    .stay-info li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-1);
+        padding: var(--space-3) var(--space-5);
+        line-height: 1;
+    }
+    .stay-info li p {
+        text-align: center;
+    }
+    .btn-stay {
+        background-color: var(--sky-blue);
+        border:none;
+        border-radius: 4px;
+        height: 54px;
+        width: 80%;
+        color: var(--color-dark);
+        font-size: 1.08rem;
+        font-weight: var(--font-bold);
+        cursor: pointer;
+        margin: var(--space-3) var(--space-3);
+    }
+    .big-num {
+        font-size: 1.7rem;
+        font-weight: var(--font-bold);
+    }
+    .small-label {
+        font-size: 0.85rem;
+        font-weight: var(--font-bold);
+    }
+    .stay-info li:first-child {
+        position: relative;
+        padding-right: 0;
+    }
+    .stay-info li:first-child::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: calc(var(--space-4) / -1);
+        transform: translateY(-50%);
+        width: 2px;
+        height: 48px;
+        background-color: #ccc;
+    }
+    .from-label {
+        font-size: 0.85rem;
+        font-weight: var(--font-bold);
+    }
+    .price {
+        font-size: 1.7rem;
+        font-weight: var(--font-bold);
+    }
+
+    /* Play Card */
+    .play {
+        flex: 1;
+        min-width: 0;
+    }
+    .play img {
+        width: 37px;
+        height: 37px;
+        background-color: #7cb342;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 2px 2px 4px #bcb8b8;
+    }
+    .play-heading {
+        font-size: 2.5rem;
+        color: #7cb342;
+    }
+    .play-info {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-4);
+        list-style: none;
+        padding: 0 var(--space-5);
+        margin: 0;
+    }
+    .btn-play {
+        background-color: var(--color-lightgreen);
+        border:none;
+        border-radius: 4px;
+        height: 54px;
+        width: 80%;
+        color: var(--color-dark);
+        font-size: 1.08rem;
+        font-weight: var(--font-bold);
+        cursor: pointer;
+        margin-right: var(--space-3);
+        margin-left: var(--space-3);
+        margin-bottom: var(--space-3);
+    }
+    .play-info li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-1);
+        padding: var(--space-3) var(--space-5);
+        line-height: 1;
+        min-width: 0;
+    }
+    .play-info li p {
+        text-align: center;
+    }
+    .round, .label {
+        font-size: 0.85rem;
+        font-weight: var(--font-bold);
+    }
+    .play-info li {
+        position: relative;
+        padding-right: var(--space-4);
+    }
+    .play-info li:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: calc(var(--space-4) / -2);
+        transform: translateY(-50%);
+        width: 2px;
+        height: 48px;
+        background-color: #ccc;
+    }
+
+    /* Find Stays (Hotel stay grid, filter and map) */
+    .results-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+    .map-panel {
+        aspect-ratio: 6 / 2;
+        height: 100%;
+        width: 100%;
+        order: -1;
+    }
+
+    /* Aside */
+    .aside {
+        display: none;
+    }
+
+
+    /*highlights*/
+    .highlights {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-template-rows: auto auto ;
+        row-gap: var(--space-1);
+        column-gap: var(--space-1);
+        align-items: center;
+    }
+    .highlights-heading br{
+        display: none;
+    }
+    .highlights-stats {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+    .btn-highlights {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+    }
+
+
+    /* Golf Highlights */
+    .golf-highlights {
+        padding: 40px 36px 28px;
+    }
+
+    .golf-highlights-title {
+        font-size: 28px;
+    }
+
+    .golf-highlights-cards {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .golf-highlights-card {
+        min-height: 350px;
+    }
+
+    .golf-highlights-items {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: 24px;
+    }
+
+    .golf-highlights-item {
+        gap: 14px;
+    }
+
+    /* Special Packages */
+    .packages {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    .packages h2 {
+        font-size: 16px;
+    }
+
+    .packages p {
+        font-size: 15px;
+        line-height: 1.45;
+    }
+
+    /* Course Features */
+    .course-features-grid {
+        grid-template-columns: 1fr 1.2fr;
+    }
+
+    .course-feature {
+        padding: 28px;
+        min-height: 308px;
+    }
+
+    .course-feature h3 {
+        font-size: 19px;
+    }
+
+    .course-feature h4 {
+        font-size: 15px;
+    }
+
+    .course-feature li {
+        font-size: 14px;
+    }
+
+    /* Best Time */
+    .best-time {
+        margin: 24px 0;
+    }
+
+    .best-time h2 {
+        font-size: 30px;
+    }
+
+    .best-time p {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    /* Weather */
+    .weather-top {
+        min-height: 150px;
+        padding: 24px 30px;
+    }
+
+    .weather-date {
+        flex-basis: 32%;
+    }
+
+    .weather-date strong {
+        font-size: 24px;
+    }
+
+    .weather-date span {
+        font-size: 16px;
+    }
+
+    .weather-days {
+        gap: 12px;
+        padding-left: 24px;
+    }
+
+    .weather-days img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .weather-body {
+        padding: 32px 38px;
+    }
+
+    .weather-seasons {
+        gap: 28px;
+    }
+
+    .season h3 {
+        font-size: 19px;
+    }
+
+    .season > p,
+    .temperature p {
+        font-size: 15px;
+    }
+
+    .other-courses {
+        display: none;
+    }
+
+    /* Footer */
+    .footer {
+        min-height: 820px;
+        padding: 100px 10% 70px;
+    }
+
+    .footer-inner {
+        display: flex;
+        flex-direction: column;
+        gap: 72px;
+    }
+
+    .footer-links {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+    }
+
+    .footer-right {
+        width: 470px;
+        max-width: 100%;
+    }
+
+    .footer-social {
+        margin-bottom: 38px;
+    }
+
+    .footer-selects {
+        margin-bottom: 58px;
+    }
+
+    .footer-logo {
+        width: 420px;
+        margin-bottom: 38px;
+    }
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 767px) {
+    
+    .aside {
+        display: none;
+    }
+    /* Navigation Bar */
+    .btn-search,
+    .btn-tee-time {
+        display: none;
+    }
+
+    .mobile-res-btns {
+        display: flex;
+        gap: var(--space-2);
+        align-items: center;
+    }
+
+    .btn-book-tee-time {
+        display: inline-flex;
+        background-color: transparent;
+        padding: 8px;
+        width: 40px;
+        height: 40px;
+        color: var(--color-lightgreen);
+        justify-content: center;
+    }
+
+    .btn-search-icon {
+        display: inline-flex;
+        background-color: transparent;
+        padding: 8px;
+        width: 36px;
+        height: 36px;
+        color: var(--color-lightgreen);
+        justify-content: center;
+    }
+
+    .btn-book-tee-time img {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* Meta info */
+    .meta-row {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        font-size: 0.6rem;
+    }
+    .divider {
+        display: none;
+    }
+
+    /* Highlights */
+    .highlights {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: var(--space-4);
+        gap: 10px;
+    }
+    .highlights-stats {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0px;
+    }
+
+    /* Stay and Play card */
+    .stay-play-card {
+        margin: 0;
+        border: none;
+        padding: 0;
+    }
+    .stay, .play {
+        border: 2px solid var(--color-border);
+        border-radius: 8px;
+        padding: 12px;
+        margin-top: var(--space-3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .card-stay, .card-play {
+        border: none;
+    }
+    .stay-heading, .play-heading {
+        font-size: 1.8rem;
+    }
+    .card-stay {
+        width: 100%;
+        padding: 10px;
+    }
+    .stay-info li:first-child {
+        padding: 8px 0;
+    }
+    .btn-stay, .btn-play {
+        border-radius: 999px;
+        height: 40px;
+        width: 80%;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 600;
+        cursor: pointer;
+        align-items: center;
+        margin: 8px auto;
+    }
+    .big-num, .price {
+        font-size: clamp(1rem, 5vw, 1.7rem);
+    }
+    .small-label {
+        font-size: clamp(0.55rem, 2.5vw, 0.85rem);
+    }
+    .label, .round {
+        font-size: clamp(0.55rem, 2.5vw, 0.85rem);
+    }
+    .stay-info li:not(:first-child) {
+        display: none;
+    }
+    .btn-stay > span:first-child {
+        display: none;
+    }
+    .btn-stay-mobile {
+        display: inline;
+    }
+    .play-info li:not(:first-child) {
+        display: none;
+    }
+    .stay-info li:first-child::after {
+        display: none;
+    }
+    .play-info li:not(:last-child)::after {
+        display: none;
+    }
+
+
+    /* Find Stays (Hotel stay grid, filter and map) */
+    #stays-heading {
+        text-align: center;
+    }
+    .filter-row .pill:nth-child(n+3) {
+        display: none;
+    }
+    .filter-row {
+        justify-content: center;
+    }
+    .map-panel {
+        display: none;
+    }
+    .results-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    .card-grid .property-card:not(:first-child) {
+        display: none;
+    }
+
+    .pagination-wrapper {
+        flex-direction: column;
+    }
+    .pagination {
+        display: none;
+    }
+    .mobile-card-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+    }
+    .mobile-card-dots span {
+        width: 12px;
+        height: 12px;
+        border: 1px solid #c7c7c7;
+        border-radius: 50%;
+        background: #fff;
+    }
+    .mobile-card-dots span.active {
+        background: #8fdc99;
+        border-color: #8fdc99;
+    }
+    .view-all-btn {
+        margin-top: var(--space-3);
+        width: 100%;
+    }
+
+  /* Golf Highlights */
+    .golf-highlights {
+        margin: 12px auto;
+        padding: 28px 18px 20px;
+    }
+
+    .golf-highlights-title {
+        margin-bottom: 16px;
+        font-size: 22px;
+        line-height: 1.25;
+    }
+
+    .golf-highlights-cards {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding-bottom: 0;
+    }
+
+    .golf-highlights-cards::-webkit-scrollbar {
+        display: none;
+    }
+
+    .golf-highlights-card {
+        flex: 0 0 calc((100% - 8px) / 2);
+        min-height: 300px;
+        padding: 18px 14px;
+        scroll-snap-align: start;
+    }
+
+    /* Always-visible custom scroll indicator */
+    .golf-highlights-scrollbar {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 6px;
+        margin-top: 10px;
+        background-color: #d9dddd;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .golf-highlights-scrollbar-thumb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        min-width: 40px;
+        background-color: #8fdc99;
+        border-radius: 10px;
+        transform: translateX(0);
+        transition: transform 0.05s linear;
+    }
+
+.golf-highlights-items {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: 12px;
+        margin-top: 24px;
+    }
+
+    .golf-highlights-item {
+        gap: 9px;
+        padding: 8px 0 20px;
+    }
+
+    .golf-highlights-item:nth-child(n + 4) {
+        padding-top: 20px;
+    }
+
+    .item-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .item-title {
+        font-size: 11px;
+    }
+
+    .item-text {
+        font-size: 9px;
+    }
+
+    /* Special Packages */
+     .packages {
+        display: block;
+        padding: 26px 30px 30px;
+        text-align: center;
+    }
+
+    .packages h2 {
+        margin-bottom: 8px;
+        font-size: 21px;
+    }
+
+    .packages p {
+        font-size: 17px;
+        line-height: 1.3;
+    }
+
+    /* Guest Reviews */
+    .reviews {
+        margin: 20px 0;
+    }
+
+    .reviews h2 {
+        margin: 0 auto 14px;
+        max-width: 380px;
+        text-align: center;
+        font-size: 28px;
+        line-height: 1.2;
+    }
+
+    .reviews-list {
+        display: block;
+    }
+
+    .review {
+        height: 242px;
+        padding: 28px 24px;
+        border-radius: 10px;
+    }
+
+    .reviews-list .review:not(:first-child) {
+        display: none;
+    }
+
+    .review-top {
+        justify-content: center;
+        gap: 28px;
+    }
+
+    .review-date {
+        font-size: 14px;
+    }
+
+    .stars {
+        font-size: 21px;
+        gap: 5px;
+    }
+
+    .review-text {
+        margin: 22px auto 0;
+        max-width: 360px;
+        text-align: center;
+        font-size: 17px;
+        line-height: 1.35;
+    }
+
+    .review-user {
+        justify-content: center;
+        margin-top: auto;
+        font-size: 15px;
+    }
+
+    .reviews-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 7px;
+        margin-top: 20px;
+    }
+
+    .reviews-dots button {
+        width: 13px;
+        height: 13px;
+        padding: 0;
+        border: 2px solid #c9cecb;
+        border-radius: 50%;
+        background: #fff;
+    }
+
+    .reviews-dots button.active {
+        border-color: #8dd79b;
+        background: #8dd79b;
+    }
+
+    /* Course Features */
+    .course-features {
+        margin: 24px 0;
+    }
+
+    .course-features h2 {
+        margin-bottom: 14px;
+        font-size: 28px;
+    }
+
+    .course-features-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .course-feature {
+        min-height: 0;
+        padding: 26px;
+    }
+
+    .course-feature h3 {
+        font-size: 24px;
+    }
+
+    .course-feature h4 {
+        font-size: 18px;
+    }
+
+    .course-feature li {
+        font-size: 17px;
+    }
+
+    /* Best Time */
+    .best-time {
+        margin: 24px 0;
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .best-time h2 {
+        margin-bottom: 12px;
+        font-size: 28px;
+        line-height: 1.2;
+    }
+
+    .best-time p {
+        font-size: 17px;
+        line-height: 1.4;
+    }
+
+    .weather {
+        width: calc(100% - 20px);
+        margin: 24px auto;
+    }
+
+    .weather-top {
+        display: block;
+        min-height: 300px;
+        padding: 26px 20px 18px;
+        text-align: center;
+    }
+
+    .weather-date {
+        padding: 0;
+        border: 0;
+    }
+
+    .weather-date strong {
+        font-size: 24px;
+    }
+
+    .weather-date span {
+        font-size: 16px;
+    }
+
+    .weather-current {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        margin: 18px 0 12px;
+    }
+
+    .weather-current img {
+        width: 58px;
+        height: 58px;
+        filter: brightness(0) invert(1);
+    }
+
+    .weather-current strong {
+        font-size: 58px;
+        font-weight: 400;
+    }
+
+    .weather-days {
+        display: flex;
+        gap: 22px;
+        padding: 0;
+        overflow: hidden;
+        justify-content: center;
+    }
+
+    .weather-days div {
+        flex: 0 0 48px;
+    }
+
+    .weather-days div:first-child {
+        display: none;
+    }
+
+    .weather-days b {
+        font-size: 12px;
+    }
+
+    .weather-days img {
+        width: 38px;
+        height: 38px;
+        margin: 8px 0 3px;
+    }
+
+    .weather-days span {
+        font-size: 11px;
+    }
+
+    .weather-body {
+        padding: 18px 28px 20px;
+        text-align: center;
+    }
+
+    .weather-body h2 {
+        margin: 0 auto 14px;
+        max-width: 330px;
+        font-size: 21px;
+        line-height: 1.15;
+        text-transform: uppercase;
+    }
+
+    .weather-seasons {
+        display: block;
+    }
+
+    .season {
+        display: none;
+    }
+
+    .season:first-child {
+        display: block;
+    }
+
+    .season > img {
+        width: 52px;
+        height: 52px;
+        margin: 0 auto 18px;
+    }
+
+    .season h3 {
+        margin-bottom: 14px;
+        font-size: 21px;
+    }
+
+    .season > p {
+        font-size: 16px;
+        line-height: 1.45;
+    }
+
+    .temperature {
+        margin-top: 20px;
+        padding-top: 20px;
+        text-align: center;
+    }
+
+    .temperature h4 {
+        font-size: 16px;
+    }
+
+    .temperature p {
+        font-size: 15px;
+        line-height: 1.4;
+    }
+
+    .weather-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 18px;
+    }
+
+    .weather-dots span {
+        width: 40px;
+        height: 7px;
+        border-radius: 5px;
+        background: #d2e3cf;
+    }
+
+    .weather-dots span.active {
+        background: #3b9785;
+    }
+
+    /* Footer */
+    .footer {
+        min-height: 730px;
+        padding: 38px 20px 28px;
+        background-position: center;
+    }
+
+    .footer-inner {
+        gap: 34px;
+    }
+
+    .footer-links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 48px;
+        row-gap: 36px;
+    }
+
+    .footer-col {
+        gap: 13px;
+    }
+
+    .footer-col a {
+        font-size: 10px;
+    }
+
+    .footer-right {
+        width: 100%;
+    }
+
+    .footer-social {
+        gap: 36px;
+        margin-bottom: 26px;
+    }
+
+    .footer-social svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .footer-selects {
+        gap: 10px;
+        margin-bottom: 42px;
+    }
+
+    .footer-selects button {
+        height: 36px;
+        padding: 0 12px;
+        font-size: 10px;
+    }
+
+    .footer-selects button span {
+        font-size: 14px;
+    }
+
+    .footer-logo {
+        width: 285px;
+        margin-bottom: 28px;
+    }
+
+    .footer-copy {
+        font-size: 10px;
+    }
+}
