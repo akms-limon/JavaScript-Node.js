@@ -1931,6 +1931,9 @@ select:focus-visible {
 
 /* Media Queries for Tablets */
 @media (max-width: 1024px) {
+    .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .nav-items {
         display: none;
     }
@@ -3296,4 +3299,12 @@ body.guest-modal-open {
 }
 
 
+#property-map {
+    width: 100%;
+    height: 100%;
+}
 
+.property-card--active {
+    outline: 3px solid #f39c12;
+    outline-offset: -3px;
+}

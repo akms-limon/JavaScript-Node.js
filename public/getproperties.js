@@ -11,7 +11,7 @@ const imageServiceBaseUrl = "https://beta.imgservice.rentbyowner.com/640x300/";
 
 // Property limit
 function getPropertyLimit() {
-    return window.innerWidth < 768 ? 4 : 6;
+    return window.innerWidth <= 1024 ? 4 : 6;
 }
 
 // Escape HTML
@@ -64,7 +64,7 @@ function createPropertyCard(property) {
     );
 
     return `
-        <article class="property-card">
+        <article class="property-card" data-property-id="${propertyId}">
             <div class="property-card__photo">
                 <img src="${imageUrl}" alt="${propertyName}">
 
@@ -182,17 +182,27 @@ async function loadProperties(filter) {
 
         const properties = await response.json();
 
+        window.nearbyProperties = properties;
+
         propertyList.innerHTML = "";
 
         properties.forEach(property => {
             propertyList.innerHTML += createPropertyCard(property);
         });
 
-        updateFavoriteButtons();
+        if (typeof updateFavoriteButtons === "function") {
+            updateFavoriteButtons();
+        }
 
         currentPropertyIndex = 0;
         updateMobileProperty();
+
+        if (typeof updatePropertyMap === "function") {
+            updatePropertyMap();
+        }
     } catch (error) {
+
+        console.error("PROPERTY LOAD ERROR:", error);
 
         propertyList.innerHTML = `
             <p>Unable to load properties right now.</p>

@@ -1,11 +1,20 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
 app.get("/", (req, res) => {
     res.sendFile(path.resolve("public/index.html"));
+});
+
+app.get("/api/maps-key", (req, res) => {
+    res.json({
+        key: process.env.GOOGLE_MAPS_API_KEY
+    });
 });
 
 app.use(express.static("public"));
