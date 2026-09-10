@@ -2062,7 +2062,7 @@ select:focus-visible {
         left: 85%;
         transform: translateX(-50%);
         display: block;
-        padding: 5px 9px;
+        padding: 5px 8px;
         border-radius: 999px;
         background: rgba(0, 0, 0, 0.55);
         color: white;
