@@ -276,8 +276,15 @@ select:focus-visible {
 /* Image Gallery */
 .gallery {
     display: grid;
-    grid-template-columns: 2fr 0.9fr;
+
+    width: 100%;
+    height: 460px;
+
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
     gap: 2px;
+
     border-radius: var(--radius-size);
     overflow: hidden;
 }
@@ -290,11 +297,6 @@ select:focus-visible {
 
 .gallery-main {
     grid-row: 1 / 3;
-}
-
-.gallery-last .gallery-thumb {
-    width: 100%;
-    height: 100%;
 }
 
 .gallery-last {
@@ -345,6 +347,24 @@ select:focus-visible {
 .btn-read-more svg {
     width: var(--space-3);
     height: var(--space-3);
+}
+
+.btn-collapse {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--color-dark);
+    font-size: var(--font-small);
+    padding: 0 0 2px 0;
+    cursor: pointer;
+}
+
+.btn-collapse svg {
+    width: var(--space-3);
+    height: var(--space-3);
+}
+
+.description-long p + p {
+    margin-top: var(--space-3);
 }
 
 
@@ -1731,6 +1751,73 @@ select:focus-visible {
 }
 
 
+/* Gallery Modal view all images */
+.gallery-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.gallery-modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Blur + dark background behind the gallery */
+.gallery-modal::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: -1;
+}
+
+.gallery-modal-content {
+    width: 60%;
+    min-height: 100%;
+    position: relative;
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.gallery-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.gallery-images img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-modal-close {
+    position: fixed;
+    top: 20px;
+    right: 11%;
+    z-index: 1001;
+    border: none;
+    background: none;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+
+.gallery-arrow,
+.gallery-counter,
+.gallery-dots {
+    display: none;
+}
+
+
 
 /* Small Desktop: 1024px - 1279px */
 
@@ -1862,57 +1949,149 @@ select:focus-visible {
         grid-template-columns: 1fr;
     }
 
-    /* Image Gallery */
+     /* Image Gallery */
     .gallery {
-        grid-template-columns: 1fr;
+        display: block;
         position: relative;
+        height: auto;
     }
+
+    .gallery img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+    }
+
     .gallery-main {
         border-radius: var(--radius-size);
         display: block;
-    }
-    .gallery-thumb, .gallery-last {
-        display: none;
-    }
-    .gallery-dots {
-        position: absolute;
-        display: flex;
-        bottom: 10px;
-        left: 40%;
-        gap: var(--space-2);
-    }
-    .dot {
-        width: clamp(6px, 1vw, 10px);
-        height: clamp(6px, 1vw, 10px);
-        border-radius: 50%;
-        background-color: transparent;
-        border: 1px solid white;
-    }
-    .dot.active {
-        background-color: white;
+        touch-action: pan-y;
+        position: relative;
+        transform: translateX(0);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Stay and Play card */
-    .stay-play-card {
-        display: flex;
-        border: 2px solid var(--color-border);
-        border-radius: 8px;
-        margin-top: var(--space-3);
-        gap: var(--space-3);
-        padding: var(--space-3) var(--space-4);
+    .gallery-slide-image {
+        position: absolute;
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+
+        border-radius: var(--radius-size);
+        object-fit: cover;
+
+        transform: translateX(100%);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+        z-index: 1;
     }
-    .header-and-icon-stay, .header-and-icon-play {
+
+    .gallery-main.fade-out {
+        opacity: 0;
+    }
+
+    .gallery-thumb,
+    .gallery-last {
+        display: none;
+    }
+
+
+    /* Gallery navigation arrows */
+    .gallery-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        width: 38px;
+        height: 38px;
+
         display: flex;
         align-items: center;
-        gap: var(--space-2);
-    }
-    .card-body {
-        display: flex;
         justify-content: center;
+
+        border: none;
+        border-radius: 50%;
+
+        background: rgba(0, 0, 0, 0.45);
+        color: white;
+
+        font-size: 24px;
+        line-height: 1;
+
+        cursor: pointer;
+        z-index: 2;
+
+        transition: background-color 0.2s ease;
+    }
+
+    .gallery-arrow:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    .gallery-prev {
+        left: 12px;
+    }
+
+    .gallery-next {
+        right: 12px;
+    }
+
+
+    /* Image counter */
+    .gallery-counter {
+        position: absolute;
+        bottom: 24px;
+        left: 85%;
+        transform: translateX(-50%);
+        display: block;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.55);
+        color: white;
+        font-size: var(--font-small);
+        font-weight: 600;
+        z-index: 2;
+    }
+
+
+    /* Gallery dots */
+    .gallery-dots {
+        display: flex;
         align-items: center;
-        flex-direction: column;
-        border: 2px solid var(--color-border);
-        border-radius: 4px;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 4px;
+        padding: 0;
+        min-height: 16px;
+    }
+
+    .dot {
+        width: 9px;
+        height: 9px;
+        padding: 0;
+
+        border-radius: 50%;
+
+        background-color: transparent;
+        border: 1.5px solid var(--color-text);
+
+        opacity: 0.45;
+        transform: scale(1);
+
+        transition:
+            background-color 0.25s ease,
+            border-color 0.25s ease,
+            transform 0.25s ease,
+            opacity 0.25s ease;
+    }
+
+    .dot.active {
+        background-color: var(--color-lightgreen);
+        border-color: var(--color-lightgreen);
+
+        opacity: 1;
+        transform: scale(1.25);
     }
 
     /* Stay Card */
@@ -3115,3 +3294,6 @@ body.guest-modal-open {
 .property-favorite.active {
     color: red !important;
 }
+
+
+

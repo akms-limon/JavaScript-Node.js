@@ -23,8 +23,8 @@
         <!-- Hotel Datepicker-->
          <link rel="stylesheet" href="hotel-datepicker.css">
 
-        <script src="fecha.min.js"></script>
-        <script src="hotel-datepicker.min.js"></script>
+        <!-- <script src="fecha.min.js"></script>
+        <script src="hotel-datepicker.min.js"></script> -->
 
         <!-- Stylesheet Link -->
         <link rel="stylesheet" href="styles.css">
@@ -103,8 +103,23 @@
                         <img class="gallery-thumb" src="images/thumb-1.png" alt="Club Image 1">
                         <div class="gallery-last">
                             <img class="gallery-thumb" src="images/thumb-2.png" alt="Club Image 2">
-                            <button class="gallery-view-btn">VIEW ALL 20 IMAGES</button>
+                            <button class="gallery-view-btn">VIEW ALL IMAGES</button>
                         </div>
+
+                        <!-- Gallery Modal -->
+                         <button class="gallery-arrow gallery-prev" aria-label="Previous image">
+                            &#10094;
+                        </button>
+
+                        <div class="gallery-counter">
+                            <span id="galleryCurrent">1</span> /
+                            <span id="galleryTotal">10</span>
+                        </div>
+
+                        <button class="gallery-arrow gallery-next" aria-label="Next image">
+                            &#10095;
+                        </button>
+
                         <!-- Gallery Dots -->
                         <section class="gallery-dots">
                             <span class="dot active"></span>
@@ -112,9 +127,9 @@
                             <span class="dot"></span>
                             <span class="dot"></span>
                             <span class="dot"></span>
-                            <span class="dot"></span>
                         </section>
                     </section>
+
 
                     <!---- Stay and Play Card----->
                     <section class="stay-play-card">
@@ -169,16 +184,40 @@
 
                     <!--Description & Highlights-->
                     <article class="description">
-                        <p>
-                        Eagle Creek Golf Club combines scenic views with a championship-level course
-                        that offers a memorable golfing experience. Nestled amidst lush landscapes and
-                        serene water features, this course is known for its challenging design and
-                        exceptional playing conditions, making it a must-play destination for golf
-                        enthusiasts.
-                        <button type="button" class="btn-read-more">
-                            READ MORE <i data-lucide="chevron-down" aria-hidden="true"></i>
-                        </button>
+
+                        <p class="description-short">
+                            Eagle Creek Golf Club combines scenic views with a championship-level course
+                            that offers a memorable golfing experience. Nestled amidst lush landscapes and
+                            serene water features, this course is known for its challenging design and
+                            exceptional playing conditions, making it a must-play destination for golf
+                            enthusiasts.
+
+                            <button type="button" class="btn-read-more">
+                                READ MORE
+                                <i data-lucide="chevron-down" aria-hidden="true"></i>
+                            </button>
                         </p>
+
+                        <div class="description-long" hidden>
+                            <p>
+                                The course features beautifully maintained fairways, strategically placed
+                                hazards, and scenic water views that challenge golfers while providing a
+                                relaxing atmosphere. Its thoughtful layout offers a variety of holes for
+                                players of different skill levels, making every round both engaging and
+                                enjoyable.
+                            </p>
+
+                            <p>
+                                Guests can also enjoy convenient access to nearby accommodations and other
+                                recreational activities. Whether you are visiting for a casual round or
+                                planning a longer golf getaway, Eagle Creek Golf Club provides a memorable
+                                experience surrounded by the natural beauty of Orlando.
+                                <button type="button" class="btn-collapse">
+                                    COLLAPSE <i data-lucide="chevron-up" aria-hidden="true"></i>
+                                </button>
+                            </p>
+                        </div>
+
                     </article>
                     
                     <!-- Highlights -->
@@ -827,6 +866,15 @@
                 </div>
             </div>
         </footer>
+        <!-- Gallery modal images to view all images in a larger view. This modal is hidden by default and is displayed when an image is clicked. and this modal should scroll able instead of scrolling the entire page. And if I click on the close and outside of the modal, it should close the modal and return to the main page. -->
+        <div class="gallery-modal" id="galleryModal">
+            <div class="gallery-modal-content">
+                <button class="gallery-modal-close" id="galleryModalClose">
+                    &times;
+                </button>
+                <div class="gallery-images" id="galleryModalImages"></div>
+            </div>
+        </div>
         <script>
             lucide.createIcons();
             console.log(typeof HotelDatepicker);
@@ -877,8 +925,15 @@
                 updateGolfHighlightsScrollbar();
             }
         </script>
+        <!-- Fecha dependency -->
+        <script src="https://cdn.jsdelivr.net/npm/fecha@4.2.1/dist/fecha.min.js"></script>
+
+        <!-- Hotel Datepicker -->
+        <script src="https://cdn.jsdelivr.net/npm/hotel-datepicker@4.5.0/dist/js/hotel-datepicker.min.js"></script>
         <script src="datepicker.js"></script>
         <script src="getproperties.js"></script>
         <script src="favorite.js"></script>
+        <script src="gallery.js"></script>
+        <script src="description.js"></script>
     </body>
 </html>
