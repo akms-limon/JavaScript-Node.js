@@ -226,8 +226,11 @@ Images for these listings are pulled from:
 https://beta.imgservice.rentbyowner.com/640x300/
 ```
 Example:
-```https://beta.imgservice.rentbyowner.com/640x300/villa-te-soro-bed-and-bre-nz-
-auckland-bc-4379041-0.jpg```
+
+```
+https://beta.imgservice.rentbyowner.com/640x300/villa-te-soro-bed-and-bre-nz-
+auckland-bc-4379041-0.jpg
+```
 
 ## Favorites
 
@@ -284,4 +287,3 @@ Will show 10 image from the ```/images``` folder.
 ## The End
 
 </div>
----
