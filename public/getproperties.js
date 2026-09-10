@@ -9,12 +9,12 @@ const propertyDropdownMenu = document.getElementById("property-dropdown-menu");
 const propertyList = document.getElementById("property-list");
 const imageServiceBaseUrl = "https://beta.imgservice.rentbyowner.com/640x300/";
 
-// Property limit
+// Get property limit based on screen size.
 function getPropertyLimit() {
     return window.innerWidth <= 1024 ? 4 : 6;
 }
 
-// Escape HTML
+// Escape HTML characters.
 function escapeHtml(value) {
     return String(value ?? "")
         .replace(/&/g, "&amp;")
@@ -24,7 +24,7 @@ function escapeHtml(value) {
         .replace(/'/g, "&#039;");
 }
 
-// Create property card
+// Create a property card from property data.
 function createPropertyCard(property) {
     const propertyId = property.ID;
     const propertyData = property.Property;
@@ -42,7 +42,10 @@ function createPropertyCard(property) {
 
     let amenities = "";
 
-    if (Array.isArray(propertyData.TopAmenities) && propertyData.TopAmenities.length > 0) {
+    if (
+        Array.isArray(propertyData.TopAmenities) &&
+        propertyData.TopAmenities.length > 0
+    ) {
         amenities = propertyData.TopAmenities
             .slice(0, 4)
             .map(amenity => escapeHtml(amenity.Name))
@@ -50,7 +53,9 @@ function createPropertyCard(property) {
     }
 
     if (occupancy) {
-        amenities += amenities ? ` · Sleeps ${occupancy}` : `Sleeps ${occupancy}`;
+        amenities += amenities
+            ? ` · Sleeps ${occupancy}`
+            : `Sleeps ${occupancy}`;
     }
 
     if (!amenities) {
@@ -108,8 +113,7 @@ function createPropertyCard(property) {
                         class="btn btn-ghost"
                         href="${escapeHtml(partner?.URL || "#")}"
                         target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                        rel="noopener noreferrer">
                         Learn more
                     </a>
 
@@ -122,7 +126,7 @@ function createPropertyCard(property) {
     `;
 }
 
-// Mobile swipe
+// Mobile swipe.
 const mobileDots = document.querySelectorAll(".mobile-card-dots span");
 
 let currentPropertyIndex = 0;
@@ -130,24 +134,33 @@ let touchStartX = 0;
 let touchCurrentX = 0;
 let isDragging = false;
 
+// Check if the current view is mobile.
 function isMobileView() {
     return window.innerWidth <= 767;
 }
 
+// Update active mobile pagination dot.
 function updateMobileDots() {
     mobileDots.forEach((dot, index) => {
         let activeDotIndex = 0;
 
-        if (currentPropertyIndex === 1 || currentPropertyIndex === 2) {
+        if (
+            currentPropertyIndex === 1 ||
+            currentPropertyIndex === 2
+        ) {
             activeDotIndex = 1;
         } else if (currentPropertyIndex >= 3) {
             activeDotIndex = 2;
         }
 
-        dot.classList.toggle("active", index === activeDotIndex);
+        dot.classList.toggle(
+            "active",
+            index === activeDotIndex
+        );
     });
 }
 
+// Update mobile property card positions.
 function updateMobileProperty(animate = true, dragOffset = 0) {
     const cards = propertyList.querySelectorAll(".property-card");
 
@@ -156,9 +169,13 @@ function updateMobileProperty(animate = true, dragOffset = 0) {
     }
 
     cards.forEach((card, index) => {
-        const position = (index - currentPropertyIndex) * 100;
+        const position =
+            (index - currentPropertyIndex) * 100;
 
-        card.classList.toggle("swiping", !animate);
+        card.classList.toggle(
+            "swiping",
+            !animate
+        );
 
         card.style.transform =
             `translateX(${position}%)`;
@@ -167,7 +184,7 @@ function updateMobileProperty(animate = true, dragOffset = 0) {
     updateMobileDots();
 }
 
-// Load properties
+// Load properties from the server.
 async function loadProperties(filter) {
     try {
         const limit = getPropertyLimit();
@@ -183,11 +200,11 @@ async function loadProperties(filter) {
         const properties = await response.json();
 
         window.nearbyProperties = properties;
-
         propertyList.innerHTML = "";
 
         properties.forEach(property => {
-            propertyList.innerHTML += createPropertyCard(property);
+            propertyList.innerHTML +=
+                createPropertyCard(property);
         });
 
         if (typeof updateFavoriteButtons === "function") {
@@ -201,8 +218,10 @@ async function loadProperties(filter) {
             updatePropertyMap();
         }
     } catch (error) {
-
-        console.error("PROPERTY LOAD ERROR:", error);
+        console.error(
+            "PROPERTY LOAD ERROR:",
+            error
+        );
 
         propertyList.innerHTML = `
             <p>Unable to load properties right now.</p>
@@ -210,12 +229,13 @@ async function loadProperties(filter) {
     }
 }
 
-// Initial load
+// Initial property load.
 loadProperties("most-popular");
 
-// Dropdown
+// Toggle property sort dropdown.
 propertySortButton.addEventListener("click", () => {
-    const isOpen = propertyDropdown.classList.toggle("open");
+    const isOpen =
+        propertyDropdown.classList.toggle("open");
 
     propertySortButton.setAttribute(
         "aria-expanded",
@@ -223,17 +243,23 @@ propertySortButton.addEventListener("click", () => {
     );
 });
 
+// Handle property sort selection.
 propertyDropdownMenu.addEventListener("click", event => {
-    const option = event.target.closest("button");
+    const option =
+        event.target.closest("button");
 
     if (!option) {
         return;
     }
 
-    const selectedValue = option.dataset.value;
-    const selectedLabel = option.textContent;
+    const selectedValue =
+        option.dataset.value;
 
-    propertySortLabel.textContent = selectedLabel;
+    const selectedLabel =
+        option.textContent;
+
+    propertySortLabel.textContent =
+        selectedLabel;
 
     propertyDropdown.classList.remove("open");
 
@@ -245,6 +271,7 @@ propertyDropdownMenu.addEventListener("click", event => {
     loadProperties(selectedValue);
 });
 
+// Close property sort dropdown when clicking outside.
 document.addEventListener("click", event => {
     if (!propertyDropdown.contains(event.target)) {
         propertyDropdown.classList.remove("open");
@@ -256,76 +283,137 @@ document.addEventListener("click", event => {
     }
 });
 
-// Touch start
-propertyList.addEventListener("touchstart", event => {
-    if (!isMobileView()) {
-        return;
-    }
-
-    touchStartX = event.touches[0].clientX;
-    touchCurrentX = touchStartX;
-    isDragging = true;
-
-    updateMobileProperty(false, 0);
-}, { passive: true });
-
-// Touch move
-propertyList.addEventListener("touchmove", event => {
-    if (!isMobileView() || !isDragging) {
-        return;
-    }
-
-    touchCurrentX = event.touches[0].clientX;
-
-    const dragDistance = touchCurrentX - touchStartX;
-
-    updateMobileProperty(false, dragDistance);
-}, { passive: true });
-
-// Touch end
-propertyList.addEventListener("touchend", () => {
-    if (!isMobileView() || !isDragging) {
-        return;
-    }
-
-    const swipeDistance = touchCurrentX - touchStartX;
-    const cards = propertyList.querySelectorAll(".property-card");
-    const swipeThreshold = 60;
-
-    if (swipeDistance < -swipeThreshold) {
-        if (currentPropertyIndex < cards.length - 1) {
-            currentPropertyIndex++;
-        } else {
-            currentPropertyIndex = 0;
+// Handle mobile touch start.
+propertyList.addEventListener(
+    "touchstart",
+    event => {
+        if (!isMobileView()) {
+            return;
         }
-    } else if (swipeDistance > swipeThreshold) {
-        if (currentPropertyIndex > 0) {
-            currentPropertyIndex--;
-        } else {
-            currentPropertyIndex = cards.length - 1;
+
+        touchStartX =
+            event.touches[0].clientX;
+
+        touchCurrentX =
+            touchStartX;
+
+        isDragging = true;
+
+        updateMobileProperty(false, 0);
+    },
+    { passive: true }
+);
+
+// Handle mobile touch movement.
+propertyList.addEventListener(
+    "touchmove",
+    event => {
+        if (
+            !isMobileView() ||
+            !isDragging
+        ) {
+            return;
         }
+
+        touchCurrentX =
+            event.touches[0].clientX;
+
+        const dragDistance =
+            touchCurrentX - touchStartX;
+
+        updateMobileProperty(
+            false,
+            dragDistance
+        );
+    },
+    { passive: true }
+);
+
+// Handle mobile swipe end.
+propertyList.addEventListener(
+    "touchend",
+    () => {
+        if (
+            !isMobileView() ||
+            !isDragging
+        ) {
+            return;
+        }
+
+        const swipeDistance =
+            touchCurrentX - touchStartX;
+
+        const cards =
+            propertyList.querySelectorAll(
+                ".property-card"
+            );
+
+        const swipeThreshold = 60;
+
+        if (swipeDistance < -swipeThreshold) {
+            if (
+                currentPropertyIndex <
+                cards.length - 1
+            ) {
+                currentPropertyIndex++;
+            } else {
+                currentPropertyIndex = 0;
+            }
+        } else if (
+            swipeDistance > swipeThreshold
+        ) {
+            if (currentPropertyIndex > 0) {
+                currentPropertyIndex--;
+            } else {
+                currentPropertyIndex =
+                    cards.length - 1;
+            }
+        }
+
+        isDragging = false;
+
+        updateMobileProperty(
+            true,
+            0
+        );
+    },
+    { passive: true }
+);
+
+// Reset mobile swipe after touch cancellation.
+propertyList.addEventListener(
+    "touchcancel",
+    () => {
+        isDragging = false;
+
+        updateMobileProperty(
+            true,
+            0
+        );
     }
+);
 
-    isDragging = false;
-    updateMobileProperty(true, 0);
-}, { passive: true });
-
-// Touch cancel
-propertyList.addEventListener("touchcancel", () => {
-    isDragging = false;
-    updateMobileProperty(true, 0);
-});
-
-// Resize
+// Update property cards after window resize.
 window.addEventListener("resize", () => {
-    const cards = propertyList.querySelectorAll(".property-card");
+    const cards =
+        propertyList.querySelectorAll(
+            ".property-card"
+        );
 
     if (isMobileView()) {
-        if (currentPropertyIndex >= cards.length) {
-            currentPropertyIndex = Math.max(cards.length - 1, 0);
+        if (
+            currentPropertyIndex >=
+            cards.length
+        ) {
+            currentPropertyIndex =
+                Math.max(
+                    cards.length - 1,
+                    0
+                );
         }
 
         updateMobileProperty();
+
         return;
     }
 

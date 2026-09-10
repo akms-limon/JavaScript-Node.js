@@ -30,8 +30,6 @@ app.get("/get-property", (req, res) => {
         limit
     } = req.query;
 
-    console.log(req.query);
-
     // Prevent multiple property filters from being selected at once.
     const selectedFilters = [
         mostPopular,

@@ -301,21 +301,35 @@ select:focus-visible {
 
 .gallery-last {
     position: relative;
+    min-height: 0;
 }
 
 .gallery-view-btn {
+    display: inline-flex;
     position: absolute;
-    bottom: var(--space-2);
+    bottom: 10px;
     right: 10px;
-    color: rgb(236, 235, 235);
-    border: 2.5px solid rgb(236, 235, 235);
-    background-color: transparent;
+    z-index: 100;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.55);
+
+    border: 2px solid #fff;
     border-radius: 999px;
+
     padding: 8px 10px;
+
     font-size: var(--font-small);
     font-weight: 600;
+
     cursor: pointer;
     white-space: nowrap;
+
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Stay and Play card */

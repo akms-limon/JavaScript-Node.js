@@ -4,9 +4,10 @@
 
 const favoriteStorageKey = "favoriteProperties";
 
-// Get favorite property IDs
+// Get favorite property IDs.
 function getFavoriteIds() {
-    const savedFavorites = localStorage.getItem(favoriteStorageKey);
+    const savedFavorites =
+        localStorage.getItem(favoriteStorageKey);
 
     if (!savedFavorites) {
         return [];
@@ -15,7 +16,7 @@ function getFavoriteIds() {
     return JSON.parse(savedFavorites);
 }
 
-// Save favorite property IDs
+// Save favorite property IDs.
 function saveFavoriteIds(favoriteIds) {
     localStorage.setItem(
         favoriteStorageKey,
@@ -23,7 +24,7 @@ function saveFavoriteIds(favoriteIds) {
     );
 }
 
-// Update favorite hearts after properties are loaded
+// Update favorite hearts after properties are loaded.
 function updateFavoriteButtons() {
     const favoriteIds = getFavoriteIds();
 
@@ -42,28 +43,31 @@ function updateFavoriteButtons() {
     });
 }
 
-// Toggle favorite
+// Toggle favorite property.
 function toggleFavorite(button) {
     const propertyId = button.dataset.propertyId;
 
     let favoriteIds = getFavoriteIds();
 
     if (favoriteIds.includes(propertyId)) {
-        favoriteIds = favoriteIds.filter(id => id !== propertyId);
+        favoriteIds = favoriteIds.filter(
+            id => id !== propertyId
+        );
 
         button.classList.remove("active");
     } else {
         favoriteIds.push(propertyId);
-
         button.classList.add("active");
     }
 
     saveFavoriteIds(favoriteIds);
 }
 
-// Heart click
+// Handle favorite heart click.
 document.addEventListener("click", event => {
-    const favoriteButton = event.target.closest(".property-favorite");
+    const favoriteButton = event.target.closest(
+        ".property-favorite"
+    );
 
     if (!favoriteButton) {
         return;

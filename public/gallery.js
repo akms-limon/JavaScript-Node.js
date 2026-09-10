@@ -1,3 +1,7 @@
+// ==============================
+// Gallery
+// ==============================
+
 const galleryViewButton = document.querySelector(".gallery-view-btn");
 const galleryModal = document.querySelector("#galleryModal");
 const galleryModalImages = document.querySelector("#galleryModalImages");
@@ -8,13 +12,11 @@ const galleryCurrent = document.querySelector("#galleryCurrent");
 const galleryTotal = document.querySelector("#galleryTotal");
 const galleryDots = document.querySelectorAll(".gallery-dots .dot");
 
-// Gallery image data and current image index.
 let galleryImages = [];
 let currentIndex = 0;
 let galleryLoaded = false;
 
 const galleryMain = document.querySelector(".gallery-main");
-
 
 // Fetch gallery images from the server.
 async function fetchGalleryImages() {
@@ -27,11 +29,10 @@ async function fetchGalleryImages() {
     return await response.json();
 }
 
-// Prepare gallery images by fetching them from the server and storing them in the galleryImages array.
+// Prepare gallery images.
 async function prepareGalleryImages() {
     try {
         const images = await fetchGalleryImages();
-
         const currentImage = galleryMain.getAttribute("src");
 
         galleryImages = [
@@ -41,12 +42,14 @@ async function prepareGalleryImages() {
 
         galleryLoaded = true;
     } catch (error) {
-        console.error("Failed to prepare gallery images:", error);
+        console.error(
+            "Failed to prepare gallery images:",
+            error
+        );
     }
 }
 
-
-// View all images
+// Open gallery modal and load images.
 galleryViewButton.addEventListener("click", async () => {
     if (!galleryLoaded) {
         await prepareGalleryImages();
@@ -73,27 +76,27 @@ galleryViewButton.addEventListener("click", async () => {
     document.body.style.overflow = "hidden";
 });
 
+// Close gallery modal.
+galleryModalClose.addEventListener(
+    "click",
+    closeGalleryModal
+);
 
-// Close the gallery modal when the close button is clicked.
-galleryModalClose.addEventListener("click", closeGalleryModal);
-
-
-// Close the gallery modal when clicking outside the content.
+// Close gallery modal when clicking outside.
 galleryModal.addEventListener("click", event => {
     if (event.target === galleryModal) {
         closeGalleryModal();
     }
 });
 
-
-// Close the gallery modal when Escape is pressed.
+// Close gallery modal with Escape.
 document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
         closeGalleryModal();
     }
 });
 
-
+// Close the gallery modal and restore page scrolling.
 function closeGalleryModal() {
     galleryModal.classList.remove("active");
 
@@ -101,9 +104,7 @@ function closeGalleryModal() {
     document.body.style.overflow = "";
 }
 
-
-
-// Gallery navigation buttons
+// Update the current gallery image and counter.
 function updateGalleryImage() {
     galleryMain.src = galleryImages[currentIndex];
 
@@ -113,7 +114,7 @@ function updateGalleryImage() {
     updateGalleryDots();
 }
 
-// Show the next image in the gallery.
+// Show the next gallery image.
 async function showNextImage() {
     if (!galleryLoaded) {
         await prepareGalleryImages();
@@ -132,7 +133,7 @@ async function showNextImage() {
     updateGalleryImage();
 }
 
-// Show the previous image in the gallery.
+// Show the previous gallery image.
 async function showPreviousImage() {
     if (!galleryLoaded) {
         await prepareGalleryImages();
@@ -151,119 +152,124 @@ async function showPreviousImage() {
     updateGalleryImage();
 }
 
-// Add event listeners for the gallery navigation buttons.
-galleryNext.addEventListener("click", showNextImage);
-galleryPrev.addEventListener("click", showPreviousImage);
+galleryNext.addEventListener(
+    "click",
+    showNextImage
+);
 
-// ======================================
-// Gallery Mobile Swipe
-// Same gesture behavior as property cards
-// ======================================
+galleryPrev.addEventListener(
+    "click",
+    showPreviousImage
+);
 
+// Gallery mobile swipe.
 let galleryTouchStartX = 0;
 let galleryTouchCurrentX = 0;
 let galleryIsDragging = false;
 
+// Handle touch start.
+galleryMain.addEventListener(
+    "touchstart",
+    event => {
+        if (window.innerWidth > 767) {
+            return;
+        }
 
-// Touch start
-galleryMain.addEventListener("touchstart", event => {
+        galleryTouchStartX =
+            event.touches[0].clientX;
 
-    if (window.innerWidth > 767) {
-        return;
-    }
+        galleryTouchCurrentX =
+            galleryTouchStartX;
 
-    galleryTouchStartX = event.touches[0].clientX;
-    galleryTouchCurrentX = galleryTouchStartX;
+        galleryIsDragging = true;
 
-    galleryIsDragging = true;
+        galleryMain.style.transition = "none";
+    },
+    { passive: true }
+);
 
-    galleryMain.style.transition = "none";
+// Handle touch movement.
+galleryMain.addEventListener(
+    "touchmove",
+    event => {
+        if (
+            window.innerWidth > 767 ||
+            !galleryIsDragging
+        ) {
+            return;
+        }
 
-}, { passive: true });
+        galleryTouchCurrentX =
+            event.touches[0].clientX;
+    },
+    { passive: true }
+);
 
+// Handle touch end and change image.
+galleryMain.addEventListener(
+    "touchend",
+    async () => {
+        if (
+            window.innerWidth > 767 ||
+            !galleryIsDragging
+        ) {
+            return;
+        }
 
-// Touch move
-galleryMain.addEventListener("touchmove", event => {
+        const swipeDistance =
+            galleryTouchCurrentX -
+            galleryTouchStartX;
 
-    if (window.innerWidth > 767 || !galleryIsDragging) {
-        return;
-    }
+        const swipeThreshold = 60;
 
-    galleryTouchCurrentX = event.touches[0].clientX;
+        galleryIsDragging = false;
 
-}, { passive: true });
+        galleryMain.style.transition =
+            "transform 0.3s ease";
 
+        if (swipeDistance < -swipeThreshold) {
+            galleryMain.style.transform =
+                "translateX(-100%)";
 
-// Touch end
-galleryMain.addEventListener("touchend", async () => {
+            await new Promise(resolve => {
+                setTimeout(resolve, 300);
+            });
 
-    if (window.innerWidth > 767 || !galleryIsDragging) {
-        return;
-    }
+            await showNextImage();
+        } else if (
+            swipeDistance > swipeThreshold
+        ) {
+            galleryMain.style.transform =
+                "translateX(100%)";
 
-    const swipeDistance =
-        galleryTouchCurrentX - galleryTouchStartX;
+            await new Promise(resolve => {
+                setTimeout(resolve, 300);
+            });
 
-    const swipeThreshold = 60;
-
-    galleryIsDragging = false;
-
-
-    // Same transition as property cards
-    galleryMain.style.transition =
-        "transform 0.3s ease";
-
-
-    // Swipe left → next image
-    if (swipeDistance < -swipeThreshold) {
+            await showPreviousImage();
+        }
 
         galleryMain.style.transform =
-            "translateX(-100%)";
+            "translateX(0)";
+    },
+    { passive: true }
+);
 
-        await new Promise(resolve => {
-            setTimeout(resolve, 300);
-        });
+// Reset gallery position when touch is cancelled.
+galleryMain.addEventListener(
+    "touchcancel",
+    () => {
+        galleryIsDragging = false;
 
-        await showNextImage();
-    }
-
-
-    // Swipe right → previous image
-    else if (swipeDistance > swipeThreshold) {
+        galleryMain.style.transition =
+            "transform 0.3s ease";
 
         galleryMain.style.transform =
-            "translateX(100%)";
-
-        await new Promise(resolve => {
-            setTimeout(resolve, 300);
-        });
-
-        await showPreviousImage();
+            "translateX(0)";
     }
+);
 
-
-    // Reset position
-    galleryMain.style.transform =
-        "translateX(0)";
-
-}, { passive: true });
-
-
-// Touch cancel
-galleryMain.addEventListener("touchcancel", () => {
-
-    galleryIsDragging = false;
-
-    galleryMain.style.transition =
-        "transform 0.3s ease";
-
-    galleryMain.style.transform =
-        "translateX(0)";
-});
-
-
-// Update the active dot in the gallery modal based on the current image index.
-
+// Update the active gallery dot.
 function updateGalleryDots() {
     let activeDotIndex;
 
@@ -271,7 +277,10 @@ function updateGalleryDots() {
         activeDotIndex = 0;
     } else if (currentIndex === 1) {
         activeDotIndex = 1;
-    } else if (currentIndex >= 2 && currentIndex <= 7) {
+    } else if (
+        currentIndex >= 2 &&
+        currentIndex <= 7
+    ) {
         activeDotIndex = 2;
     } else if (currentIndex === 8) {
         activeDotIndex = 3;
